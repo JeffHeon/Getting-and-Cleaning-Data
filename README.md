@@ -13,7 +13,7 @@ As a prerequisite, this file should be in the same folder as the
 run_analysis.R script:
 [getdata-projectfiles-UCI HAR Dataset.zip](https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip)
 
-Performing the following on the command line would generate a tidy data set file named tidy.data in the current folder.
+Performing the following on the command line would generate a tidy data set file named tidyData.csv in the current folder.
 
 `r CMD BATCH run_analysis.R`
 
