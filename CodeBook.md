@@ -26,3 +26,6 @@ We will transform the variable names a bit, since their format is unwieldy for R
 
 Once we have one dataset for all this information, we will produce a tidy data set with a descriptive activity name instead
 of just a number, and present the average of each variable, broken down by subjects and activities.
+
+I'm using underscores in the tidy data set column names as it seems to be
+alright to do now: [hipsteR](http://kbroman.github.io/hipsteR/).
