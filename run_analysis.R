@@ -14,7 +14,7 @@ if (!file.exists(dataFolder)) {
 measureNames <- function() {
   measureNameFilename <- paste0(dataFolder, "/features.txt")
   names <- read.table(measureNameFilename, stringsAsFactors=FALSE)
-  names <- names[[2]]
+  names <- names[[2]] # Actual column name
 
   # Remove parentheses and commas
   # Replace dashes with undercores
@@ -41,4 +41,11 @@ extractGroupData <- function(groupName) {
 
 testData <- extractGroupData("test")
 trainData <- extractGroupData("train")
-measureNames()
+
+# Merge with rbind
+
+# Add activity name column
+
+# Only keep subject id, activity names, mean & standard deviation measurements 
+
+# Write file
