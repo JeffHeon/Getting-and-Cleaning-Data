@@ -1,4 +1,5 @@
 ## This script generates the tidy data
+library(reshape)
 
 # Unzip the raw data if we do not find the data folder
 dataFolder <- "UCI HAR Dataset"
@@ -11,6 +12,7 @@ if (!file.exists(dataFolder)) {
   unzip(rawDataFilename)
 }
 
+# Get and clean up the measurement names
 measureNames <- function() {
   measureNameFilename <- paste0(dataFolder, "/features.txt")
   names <- read.table(measureNameFilename, stringsAsFactors=FALSE)
@@ -23,10 +25,12 @@ measureNames <- function() {
   names <- gsub("-", "_", names)
 }
 
+# Utility function to generate complete filenames for a group (test or train.)
 buildPathForGroupFile <- function(groupName, fileSubname) {
   paste0(dataFolder, "/", groupName, fileSubname, groupName, ".txt")
 }
 
+# Extract the data into one data set for a given group (test or train.)
 extractGroupData <- function(groupName) {
   subjectFilename <- buildPathForGroupFile(groupName, "/subject_")
   measureFilename <- buildPathForGroupFile(groupName, "/X_")
@@ -42,10 +46,9 @@ extractGroupData <- function(groupName) {
   colnames(measures) <- measureNames()
   
   # Extract frequency domain signals variable on mean and standard deviation only
-  # mn[grep("*_(mean|std)_*", mn)]
   measuresSubset <- measures[,grep("f.*_(mean|std)_.*", colnames(measures))]
 
-  cbind(subjects, activities,measuresSubset)
+  cbind(subjects, activities, measuresSubset)
 }
 
 # Extract test and train data
@@ -60,10 +63,15 @@ activityNameFilename <- paste0(dataFolder, "/activity_labels.txt")
 activityNames <- read.table(activityNameFilename, stringsAsFactors=FALSE)
 colnames(activityNames) <- c("activity_id", "activity_name")
 data <- merge(data, activityNames, by.x="activity_id", by.y="activity_id")
+data <- data[,names(data) != "activity_id"] # We don't need that column anymore
 
-# Make a tidy data set with the average of each variable, broken down by subjects and activities.
+## Make a tidy data set with the average of each variable, broken down by subjects and activities.
 
-# Melt and reshape?
+# Melt data by subject and activity
+meltedData <- melt(data, c("subject_id", "activity_name"))
+
+# Recast on the mean
+tidyData <- cast(meltedData, subject_id+activity_name~variable, mean)
 
 # Write file
-write.csv(tidyData, file = "tidyData.csv")
+write.csv(tidyData, file="tidyData.csv")
