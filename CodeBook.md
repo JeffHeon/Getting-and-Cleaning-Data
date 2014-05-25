@@ -16,6 +16,11 @@ The following files have all the same number of line corresponding to one window
 Additionally, `features.txt` gives the variable name for each measure of the `X_*` files
 and `activity_labels.txt` gives an activity name corresponding to the activity number of the `Y_*` files.
 
+The measurements concert time (names beginning with t,) and frequency (names beginning with f). They are
+further divided into Body or Gravity, linear (Acc)eleration or angular velocity (Gyro) and finally as a vector (XYZ) or (Mag)nitude.
+
+Variables concerning the mean, standard deviation and others have been created form these measurements.
+
 We will merge all these files together. In our case, we will only keep mean and standard deviation measurements.
 We will transform the variable names a bit, since their format is unwieldy for R, having parentheses and commas.
 
